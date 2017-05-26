@@ -1,2 +1,2 @@
 # VisualStudioDSC
-DSC Module to install Visual Studio 2013+
+DSC Module to install Visual Studio 2017

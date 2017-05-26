@@ -68,6 +68,13 @@ function Set-TargetResource
     
     Write-Verbose -Message "Installing Visual Studio 2017"
 
+    if ($SourceCredential)
+    {
+        $tempPath = $env:TEMP + "\" + $ExecutablePath.Split('\')[$ExecutablePath.Split('\').Length -1]
+        Copy-Item -Path $ExecutablePath -Destination $tempPath
+        $ExecutablePath = $tempPath
+    }
+
     $installer = Get-Item -Path $ExecutablePath
 
     if($installer)
