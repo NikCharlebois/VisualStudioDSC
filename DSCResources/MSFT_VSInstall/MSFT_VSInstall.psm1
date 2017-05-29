@@ -8,6 +8,10 @@ function Get-TargetResource
         [System.String] 
         $ExecutablePath,
 
+        [parameter(Mandatory = $true)] 
+        [System.Management.Automation.PSCredential] 
+        $InstallAccount,
+
         [parameter(Mandatory = $false)] 
         [System.String[]] 
         $Workloads,
@@ -56,19 +60,26 @@ function Set-TargetResource
         [parameter(Mandatory = $true)]  
         [System.String] 
         $ExecutablePath,
+
+        [parameter(Mandatory = $true)] 
+        [System.Management.Automation.PSCredential] 
+        $InstallAccount,
     
         [parameter(Mandatory = $false)] 
         [System.String[]] 
-        $Workloads,
+        $Workloads,        
     
         [ValidateSet("Present","Absent")]
         [System.String]
         $Ensure = "Present"
     )
     
-    Write-Verbose -Message "Installing Visual Studio 2017"
+    Write-Verbose -Message "Copying the Installer executable"
 
-    $tempPath = $env:TEMP + "\" + $ExecutablePath.Split('\')[$ExecutablePath.Split('\').Length -1]
+    $tempFolder = "C:\VS2017Temp"
+    New-Item -Path "C:\VS2017Temp" -ItemType Directory -Force -Confirm:$false
+
+    $tempPath = $tempFolder + "\" + $ExecutablePath.Split('\')[$ExecutablePath.Split('\').Length -1]
     Copy-Item -Path $ExecutablePath -Destination $tempPath
     $ExecutablePath = $tempPath
 
@@ -81,7 +92,10 @@ function Set-TargetResource
         {
             $workloadArgs += " --add $workload"
         }
-        Start-Process -FilePath $ExecutablePath -ArgumentList ("--quiet" + $workloadArgs) -Wait -PassThru
+        Write-Verbose -Message "Installing Visual Studio 2017"
+        Start-Process -FilePath $ExecutablePath -ArgumentList ("--quiet" + $workloadArgs) -Wait -PassThru -Credential $InstallAccount
+
+        Remove-Item -Path $tempFolder -Force -Recurse -Confirm:$false
     }
     else{
         throw "The Installer could not be found at $ExecutablePath"
@@ -97,6 +111,10 @@ function Test-TargetResource
         [parameter(Mandatory = $true)]  
         [System.String] 
         $ExecutablePath,
+
+        [parameter(Mandatory = $true)] 
+        [System.Management.Automation.PSCredential] 
+        $InstallAccount,
 
         [parameter(Mandatory = $false)] 
         [System.String[]] 
