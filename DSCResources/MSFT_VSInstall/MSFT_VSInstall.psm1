@@ -30,14 +30,15 @@ function Get-TargetResource
 
     $installedItems = $installedItemsX86 + $installedItemsX64 
     $installedItems = $installedItems | Select-Object -Property DisplayName -Unique    
-    $spInstall = $installedItems | Where-Object -FilterScript { 
+    $vsInstall = $installedItems | Where-Object -FilterScript { 
         $_ -match "Microsoft Visual Studio 2017" 
     }
     
-    if ($spInstall) 
+    if ($vsInstall) 
     {
         return @{
             ExecutablePath = $ExecutablePath
+            InstallAccount = $InstallAccount
             Workloads = $Workloads
             Ensure = "Present"
         }
@@ -133,11 +134,11 @@ function Test-TargetResource
 
     $installedItems = $installedItemsX86 + $installedItemsX64 
     $installedItems = $installedItems | Select-Object -Property DisplayName -Unique    
-    $spInstall = $installedItems | Where-Object -FilterScript { 
+    $vsInstall = $installedItems | Where-Object -FilterScript { 
         $_ -match "Microsoft Visual Studio 2017" 
     }
 
-    if($spInstall)
+    if($vsInstall)
     {
 	    return $true;
     }
