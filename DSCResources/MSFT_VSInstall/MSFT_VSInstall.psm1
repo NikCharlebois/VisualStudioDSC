@@ -81,7 +81,7 @@ function Set-TargetResource
     New-Item -Path "C:\VS2017Temp" -ItemType Directory -Force -Confirm:$false
 
     $tempPath = $tempFolder + "\" + $ExecutablePath.Split('\')[$ExecutablePath.Split('\').Length -1]
-    Copy-Item -Path $ExecutablePath -Destination $tempPath
+    Copy-Item -Path $ExecutablePath -Destination $tempPath -Credential $InstallAccount
     $ExecutablePath = $tempPath
 
     $installer = Get-Item -Path $ExecutablePath
