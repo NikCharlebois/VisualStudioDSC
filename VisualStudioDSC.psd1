@@ -12,7 +12,7 @@
 # RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '1.0.0.8'
+ModuleVersion = '1.0.0.10'
 
 # ID used to uniquely identify this module
 GUID = '6c1176a0-4fac-4134-8ca2-3fa8a21a7b90'
@@ -102,7 +102,7 @@ PrivateData = @{
         ProjectUri = 'https://github.com/NikCharlebois/VisualStudioDSC'
 
         # A URL to an icon representing this module.
-        # IconUri = 'https://www.visualstudio.com/wp-content/uploads/2017/03/previewlogo.svg'
+         IconUri = 'https://www.visualstudio.com/wp-content/uploads/2017/03/previewlogo.svg'
 
         
 

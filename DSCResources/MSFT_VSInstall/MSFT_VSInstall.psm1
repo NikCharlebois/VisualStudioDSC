@@ -75,14 +75,14 @@ function Set-TargetResource
         $Ensure = "Present"
     )
     
-    Write-Verbose -Message "Copying the Installer executable"
+    #Write-Verbose -Message "Copying the Installer executable"
 
-    $tempFolder = "C:\VS2017Temp"
-    New-Item -Path "C:\VS2017Temp" -ItemType Directory -Force -Confirm:$false
+    #$tempFolder = "C:\VS2017Temp"
+    #New-Item -Path "C:\VS2017Temp" -ItemType Directory -Force -Confirm:$false
 
-    $tempPath = $tempFolder + "\" + $ExecutablePath.Split('\')[$ExecutablePath.Split('\').Length -1]
-    Copy-Item -Path $ExecutablePath -Destination $tempPath -Credential $InstallAccount
-    $ExecutablePath = $tempPath
+    #$tempPath = $tempFolder + "\" + $ExecutablePath.Split('\')[$ExecutablePath.Split('\').Length -1]
+    #Copy-Item -Path $ExecutablePath -Destination $tempPath
+    #$ExecutablePath = $tempPath
 
     $installer = Get-Item -Path $ExecutablePath
 
@@ -96,7 +96,7 @@ function Set-TargetResource
         Write-Verbose -Message "Installing Visual Studio 2017"
         Start-Process -FilePath $ExecutablePath -ArgumentList ("--quiet" + $workloadArgs) -Wait -PassThru -Credential $InstallAccount
 
-        Remove-Item -Path $tempFolder -Force -Recurse -Confirm:$false
+        #Remove-Item -Path $tempFolder -Force -Recurse -Confirm:$false
     }
     else{
         throw "The Installer could not be found at $ExecutablePath"
