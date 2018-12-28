@@ -94,7 +94,7 @@ function Set-TargetResource
             $workloadArgs += " --add $workload"
         }
         Write-Verbose -Message "Installing Visual Studio 2017"
-        Start-Process -FilePath $ExecutablePath -ArgumentList ("--quiet" + $workloadArgs) -Wait -PassThru -Credential $InstallAccount
+        Start-Process -FilePath $ExecutablePath -ArgumentList ("--quiet" + $workloadArgs) -Wait -PassThru -Verb runAs
 
         #Remove-Item -Path $tempFolder -Force -Recurse -Confirm:$false
     }
